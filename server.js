@@ -1,7 +1,8 @@
-const express = require('express')
+const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
-const app = express()
+const app = express();
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -13,6 +14,7 @@ const DB_HOST = process.env.DB_HOST || "localhost";
 const DB_NAME = process.env.DB_NAME;
 
 app.use(bodyParser.json());
+app.use(cors());
 
 // Use API routes
 app.use("/api", apiRoutes);
