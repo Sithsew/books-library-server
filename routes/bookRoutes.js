@@ -8,20 +8,20 @@ const mongoose = require("mongoose");
 // GET /books
 router.get("/", async (req, res) => {
   const page = req.query.page || 1;
-  const limit = req.query.limit || 10;
-  const skip = (page - 1) * limit;
+  const pageSize = req.query.pageSize || 10;
+  const skip = (page - 1) * pageSize;
 
   try {
     const totalBooks = await Book.countDocuments();
-    const books = await Book.find().skip(skip).limit(limit).populate("author");
+    const books = await Book.find().skip(skip).limit(pageSize).populate("author");
 
-    const totalPages = Math.ceil(totalBooks / limit);
+    const totalPages = Math.ceil(totalBooks / pageSize);
 
     res.status(200).json({
       data: books,
       pagination: {
         page,
-        limit,
+        pageSize,
         totalBooks,
         totalPages,
       },
